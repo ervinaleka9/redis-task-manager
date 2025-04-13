@@ -1,42 +1,66 @@
-# Create a README.md structured according to the assignment instructions
+# Implementación de una aplicación CRUD con Redis y Docker
 
-readme_academic = """# 📝 Proyecto: Gestor de Tareas con Redis y Docker
+Este proyecto implementa una aplicación de gestión de tareas (CRUD) utilizando Node.js, Redis y Docker. Está diseñado como parte de un trabajo académico para demostrar el uso de Redis como sistema de almacenamiento clave-valor en una arquitectura distribuida, ligera y de bajo consumo.
 
-## 👥 Miembros del equipo
-- Ervina Leka
+# Características principales
+- Redis como sistema de almacenamiento en memoria
+- Contenedores gestionados con Docker y Docker Compose
+- Tests automatizados con Vitest
+- RedisInsight para visualización de datos
 
----
+# Estructura del proyecto
 
-## 📑 Índice
+```
+├── app/
+│   ├── index.js
+│   ├── routes.js
+│   └── redisClient.js
+├── tests/
+│   └── task.test.js
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
+```
 
-1. [Casos de uso de Redis](#1-casos-de-uso-de-redis)
-2. [Explicación del Docker creado y su uso](#2-explicación-del-docker-creado-y-su-uso)
-3. [Recomendaciones de uso de Redis según el tipo de proyecto y evaluación en TFM](#3-recomendaciones-de-uso-de-redis-según-el-tipo-de-proyecto-y-evaluación-en-tfm)
-4. [Conclusiones](#4-conclusiones)
-5. [Bibliografía](#5-bibliografía)
+## Instalación y ejecución
 
----
+1. Clonar el repositorio:
+```bash
+git clone https://github.com/ervinaleka9/redis-task-manager.git
+cd redis-task-manager
+```
 
-## 1. Casos de uso de Redis
-
-Redis es una base de datos en memoria extremadamente rápida, utilizada en distintos tipos de proyectos, tales como:
-
-- **Sistemas de caché** para reducir latencia y carga en bases de datos tradicionales.
-- **Gestión de sesiones de usuario** en aplicaciones web.
-- **Colas de trabajo** y sistemas de mensajería asincrónica (pub/sub).
-- **Ranking y contador de visitas** en aplicaciones tipo redes sociales.
-- **Almacenamiento de datos temporales o efímeros**, como verificación de email, tokens, etc.
-
----
-
-## 2. Explicación del Docker creado y su uso
-
-El entorno está compuesto por dos servicios definidos en `docker-compose.yml`:
-
-- `redis`: una instancia de RedisStack que incluye RedisJSON y RedisInsight para visualización.
-- `app`: una aplicación Node.js que permite realizar operaciones CRUD sobre tareas.
-
-### Para ejecutar el proyecto:
-
+2. Iniciar el entorno con Docker:
 ```bash
 docker-compose up --build
+```
+- RedisInsight estará en `http://localhost:8001`
+
+3. Comandos en Redis CLI
+  Crear una tarea (Create)
+  HSET task:1234 id "1234" title "Hacer el informe" deadline "2025-05-01" status "pending"
+
+  Leer una tarea (Read)
+  HGETALL task:1234
+
+  Actualizar una tarea (Update)
+  HSET task:1234 status "done"
+
+  Eliminar una tarea (Delete)
+  DEL task:1234
+
+  Listar todas las tareas almacenadas
+  KEYS task:*
+
+## Pruebas
+
+Ejecutar los tests con:
+
+```bash
+npm install
+npm run test
+```
+
+## Autor
+Ervina Leka 
+
