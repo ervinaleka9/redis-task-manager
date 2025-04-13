@@ -1,7 +1,9 @@
-const redis = require('redis');
-const client = redis.createClient({ url: 'redis://redis:6379' });
+import { createClient } from 'redis';
+
+const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
+const client = createClient({ url: redisUrl });
 
 client.on('error', err => console.error('Redis Client Error', err));
-client.connect();
+await client.connect();
 
-module.exports = client;
+export default client;
